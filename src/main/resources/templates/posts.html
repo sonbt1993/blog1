@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/layout :: fragment(~{:: title}, ~{:: #body})}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.fullname} + '\'s micro blog'"></title>
+</head>
+<body>
+<div class="container" id="body">
+    <div id="nav">
+        <a href="/posts" style="text-decoration: none"><h1 th:text="${user.fullname} + '\'s micro blog'"></h1></a>
+        <div style="display: flex">
+            <a href="/allpost" class="text-nav" style="padding-right: 15px">All Post</a>
+            <a href="/posts/add" class="text-nav" style="padding-right: 15px">Write new post</a>
+        </div>
+    </div>
+
+    <div id="content">
+        <th:block th:each="post:${posts}">
+            <h2><a th:href="@{/posts/{postId}(postId = ${post.id})}" th:text="${post.title}"></a></h2>
+            <p th:text="${post.content}"></p>
+        </th:block>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout :: fragment(~{:: title}, ~{:: #nav}, ~{:: #content})}">
+<head>
+    <meta charset="UTF-8">
+    <title>All Post</title>
+</head>
+<body>
+<div id="nav">
+    <h1>All Post</h1>
+    <div style="display: flex">
+        <a href="/posts" class="text-nav" style="padding-right: 15px" th:text="${user.fullname} + '\'s blog'"></a>
+        <a href="/posts/add" class="text-nav" style="padding-right: 15px">Write new post</a>
+    </div>
+</div>
+
+<div id="content">
+    <th:block th:each="post:${posts}">
+        <h2><a th:href="@{/posts/{postId}(postId = ${post.id})}" th:text="${post.title}"></a></h2>
+        <p th:text="${post.content}"></p>
+    </th:block>
+</div>
+</body>
+</html>

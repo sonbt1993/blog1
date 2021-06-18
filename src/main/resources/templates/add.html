@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{/layout :: fragment(~{:: title}, ~{:: #nav}, ~{:: #content})}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.fullname} + '\'s micro blog'"></title>
+</head>
+<body>
+<div id="nav">
+    <a href="/posts" style="text-decoration: none"><h1 th:text="${user.fullname} + '\'s micro blog'"></h1></a>
+<!--    <a href="/posts/add" class="text-nav" style="padding-right: 15px">Write new post</a>-->
+</div>
+
+<div id="content">
+
+    <form th:action="@{/posts/add}" th:object="${post}" method="post">
+        <th:block th:each="tag : ${tags}">
+            <input type="checkbox" th:field="*{tags}" th:text="${tag.name}" th:value="${tag.id}">
+        </th:block><br>
+        <input type="hidden" th:field="*{id}"><br>
+        <label>Title</label><br>
+        <input type="text" th:field="*{title}"><br>
+        <label>Content</label><br>
+        <textarea rows="9" cols="60" th:field="*{content}" th:text="*{content}"></textarea><br>
+        <input type="submit" value="Save">
+    </form>
+</div>
+</body>
+</html>

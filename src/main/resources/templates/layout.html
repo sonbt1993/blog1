@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="fragment(title, nav, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title} ?: ~{}">Document</title>
+    <style>
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text-nav {
+            font-size: 18px;
+        }
+
+        .tag {
+            position: relative;
+            background: lightblue;
+            padding: 4px 1px 4px 4px;
+            margin-right: 20px;
+        }
+
+        .tag::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -14px;
+            border-bottom: 12px solid transparent;
+            border-top: 13px solid transparent;
+            border-left: 14px solid lightblue;
+        }
+
+        #nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<header style="margin-bottom: 15px">
+    <div th:replace="${nav} ?: ~{}"></div>
+    <a href="/logout" class="text-nav">Logout</a>
+</header>
+<div th:insert="${content} ?: ~{}">
+    <p>Noi dung</p>
+</div>
+
+</body>
+</html>

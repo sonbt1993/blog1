@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout :: fragment(~{:: title}, ~{:: #nav}, ~{:: #content})}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.fullname} + '\'s micro blog'"></title>
+</head>
+<body>
+<div id="nav">
+    <a href="/posts" style="text-decoration: none"><h1 th:text="${user.fullname} + '\'s micro blog'"></h1></a>
+    <div style="display: flex">
+        <a href="/allpost" class="text-nav" style="padding-right: 15px">All Post</a>
+        <a href="/posts/add" class="text-nav" style="padding-right: 15px">Write new post</a>
+    </div>
+</div>
+
+<div id="content">
+    <p th:text="${post.title}" style="font-size: 30px; margin-bottom: 5px"></p>
+    <th:block th:each="tag : ${post.getTags()}">
+        <span class="tag" th:text="${tag.name}"></span>
+    </th:block>
+    <br><br>
+    <span th:text="${post.getAuthor().fullname} + ' --- '"></span>
+    <span th:text="${#temporals.format(post.lastUpdate, 'dd/MM/yyy HH:mm')}" style="padding-right: 15px"></span>
+    <a th:if="${user.id} == ${post.getAuthor().id}" th:href="@{/posts/edit(id=${post.id})}">Edit</a>
+    <a th:if="${user.id} == ${post.getAuthor().id}" th:href="@{/posts/delete(id=${post.id})}">Delete</a>
+    <p th:text="${post.content}"></p>
+    <hr>
+    <div th:each="comment:${post.getComments()}">
+        <span th:text="${comment.getCommenter().fullname} + ' comments at ' +
+        ${#temporals.format(comment.lastUpdate, 'dd/MM/yyy HH:mm')}" style="margin-bottom: 5px"></span>
+
+        <a th:if="${user.id} == ${post.getAuthor().id} or ${user.id} == ${comment.getCommenter().id}"
+           th:href="@{/posts/remove(commentId=${comment.id})}"
+           style="padding-left: 50px">Remove</a>
+        <p th:text="${comment.content}" style="padding-left: 50px; margin-top: 0; font-style: italic"></p>
+    </div>
+    <form th:action="@{/posts/comment/{postId}(postId=${post.id})}" th:object="${comment}" method="post">
+        <textarea rows="7" cols="50" th:field="*{content}"></textarea>
+        <input type="submit" value="Save">
+    </form>
+</div>
+</body>
+</html>

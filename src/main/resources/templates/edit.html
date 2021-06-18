@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout :: fragment(~{:: title}, ~{:: #username}, ~{:: #content})}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.fullname} + '\'s micro blog'"></title>
+</head>
+<body>
+<h1 id="username" th:text="${user.fullname} + '\'s micro blog'"></h1>
+
+<div id="content">
+    <form th:action="@{/posts/{id}(id = ${post.id})}" th:object="${post}" method="post">
+        <th:block th:each="tag : ${tags}">
+            <input type="checkbox" th:field="*{tags}" th:text="${tag.name}" th:value="${tag.id}">
+        </th:block><br>
+
+        <input type="hidden" th:field="*{id}"><br>
+        <label>Title</label><br>
+        <input type="text" th:field="*{title}"><br>
+        <label>Content</label><br>
+        <textarea rows="9" cols="60" th:field="*{content}" th:text="*{content}"></textarea><br>
+        <input type="submit" value="Update">
+    </form>
+</div>
+</body>
+</html>

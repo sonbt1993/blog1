@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{/layout/layout :: fragment(~{:: title}, ~{:: #body})}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Micro Blog - Login</title>
+</head>
+<body>
+<div class="container" id="body">
+  <h1>Login</h1>
+  <form action="#" th:action="@{/login}" th:object="${loginRequest}" method="post">
+    <label>Email:</label><br>
+    <input type="text" placeholder="Email" th:field="*{email}"/><br><br>
+    <label>Password (3 characters minimum):</label><br>
+    <input type="password" placeholder="Password" th:field="*{password}"/><br><br>
+    <button type="submit">Login</button>
+  </form>
+  <p th:text="*{errorMessage}">Error Message</p>
+</div>
+</body>
+</html>
